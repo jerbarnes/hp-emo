@@ -31,12 +31,20 @@ SRC-TRG: 0.06 (0.25)
 
 model.py has the following arguments:
 
+```
 optional arguments:
   -h, --help            show this help message and exit
   -sd SRC_DATASET, --src_dataset SRC_DATASET
   -td TRG_DATASET, --trg_dataset TRG_DATASET
   -emo EMOTION, --emotion EMOTION
   -f FEATURES [FEATURES ...], --features FEATURES [FEATURES ...]
+```
+
+--src_dataset should point to a repository with the subrepos 'train', 'dev', and 'test'. The default is dataset/en
+
+--trg_dataset should point to a repository with the subrepo 'test'. The default is dataset/es
+
+--emotion is one of the four emotions: anger, fear, joy, sadness
 
   The optional features are:
   1. 'ngrams': token ngrams (1-4),
