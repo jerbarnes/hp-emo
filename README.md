@@ -2,8 +2,7 @@ Cross-lingual approaches to fine-grained emotion detection
 ==============
 
 We explore cross-lingual aproaches to fine-grained emotion detection
-as well as creating fine-grained emotion datasets for Spanish and Catalan
-using Best-Worst Scaling.
+as well as creating fine-grained emotion datasets for Spanish.
 
 
 Requirements to run the experiments
@@ -11,26 +10,51 @@ Requirements to run the experiments
 - python3
 - sklearn
 - scipy
-- transformers
 
 
 Usage
 --------
 
-First, download the pretrained [embeddings](https://drive.google.com/file/d/1GpyF2h0j8K5TKT7y7Aj0OyPgpFc8pMNS/view), unzip them and place the folder called 'embeddings' in the fine-grained_cross-lingual_emotion directory.
-
-The 'models' folder contains the scripts to reproduce the results in the paper.
+The 'models' folder contains the main model.
 
 Reports Pearson correlation and p-values for models trained on source language data and tested on source (SRC-SRC) and then tested on target language data (SRC-TRG)
 
 ```
-python3 bow_regression.py
+python3 models/model.py --src_dataset dataset/en --trg_dataset dataset/es --emotion anger --features ngrams
+
 src_dataset done
 trg_dataset done
 Training SVR...
-SRC-SRC: 0.551 (0.000)
-SRC-TRG: 0.285 (0.000)
+SRC-SRC: 0.47 (0.00)
+SRC-TRG: 0.06 (0.25)
 ```
+
+model.py has the following arguments:
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -sd SRC_DATASET, --src_dataset SRC_DATASET
+  -td TRG_DATASET, --trg_dataset TRG_DATASET
+  -emo EMOTION, --emotion EMOTION
+  -f FEATURES [FEATURES ...], --features FEATURES [FEATURES ...]
+
+  The optional features are:
+  1. 'ngrams': token ngrams (1-4),
+  2. 'char_ngrams': character ngrams (3-5),
+  3. 'NRC_sent': lexicon features from the English NRC sentiment lexicon (see paper)
+  4. 'NRC_emo': lexicon features from the English NRC emotion lexicon
+  5. 'NRC_hash': lexicon features from the English NRC hashtag emotion lexicon
+
+
+To Do
+---------
+
+Notice that directly applying a model without any transfer method leads to very poor results (0.06 compared to 0.47).
+
+Use (LibreTranslate)[https://libretranslate.com/] to create two new versions of the data: 1) Spanish translations of the original English train/dev data and 2) English translations of the Spanish test data. Which approach works best?
+
+Use an available multiLingual language model (mBERT, XLM Robert, etc) and fine-tune this on the original English train/dev data and then test directly on the Spanish test data. How well does this compare to the other approaches?
+
 
 If you use this code, please cite the following paper:
 -------
@@ -52,6 +76,6 @@ If you use this code, please cite the following paper:
 License
 -------
 
-Copyright (C) 2019, Jeremy Barnes
+Copyright (C) 2022, Jeremy Barnes
 
 Licensed under the terms of the Creative Commons CC-BY public license

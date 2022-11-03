@@ -43,7 +43,7 @@ class Vocab(defaultdict):
         return [idx2w[int(i)] if i in idx2w else "UNK" for i in ids]
 
 
-def open_nrc_sentiment(file="../lexicons/NRC-Hashtag-Sentiment-Lexicon-v0.1/unigrams-pmilexicon.txt.gz"):
+def open_nrc_sentiment(file="lexicons/NRC-Hashtag-Sentiment-Lexicon-v0.1/unigrams-pmilexicon.txt.gz"):
     lex = {}
     for line in gzip.open(file, mode="r"):
         line = line.decode()
@@ -51,7 +51,7 @@ def open_nrc_sentiment(file="../lexicons/NRC-Hashtag-Sentiment-Lexicon-v0.1/unig
         lex[word] = float(score)
     return lex
 
-def open_nrc_emotion(file="../lexicons/lexicons/NRC-emotion-lexicon-wordlevel-v0.92.txt.gz"):
+def open_nrc_emotion(file="lexicons/lexicons/NRC-emotion-lexicon-wordlevel-v0.92.txt.gz"):
     lex = {}
     for line in gzip.open(file, mode="r"):
         line = line.decode()
@@ -63,7 +63,7 @@ def open_nrc_emotion(file="../lexicons/lexicons/NRC-emotion-lexicon-wordlevel-v0
             lex[word].append(int(score))
     return lex
 
-def open_nrc_hashtag(file="../lexicons/lexicons/NRC-Hashtag-Emotion-Lexicon-v0.2.txt.gz"):
+def open_nrc_hashtag(file="lexicons/lexicons/NRC-Hashtag-Emotion-Lexicon-v0.2.txt.gz"):
     lex = {}
     emotions = {"anticipation":0,
                 "fear":1,
